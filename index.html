@@ -11,8 +11,8 @@
 
     <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-12 px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Residential Solar Project Calculator</h1>
-            <p class="text-blue-100 text-lg text-balance">Get an instant estimate for your home solar PV system.</p>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 uppercase">Solar Project Calculator</h1>
+            <p class="text-blue-100 text-lg">Instant residential solar estimation for Filipino homeowners.</p>
         </div>
     </header>
 
@@ -21,7 +21,7 @@
             <div class="p-8 md:p-12">
                 
                 <div class="max-w-md mx-auto mb-12 text-center">
-                    <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Your Average Monthly Bill (₱)</label>
+                    <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Average Monthly Bill (₱)</label>
                     <input type="number" id="billInput" value="8000" step="500" 
                            class="w-full text-center text-4xl font-bold text-blue-700 border-b-4 border-blue-200 focus:border-blue-600 outline-none pb-2 transition-all">
                 </div>
@@ -29,75 +29,58 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                     <div class="bg-blue-50 p-8 rounded-2xl border border-blue-100 text-center">
                         <i class="fas fa-solar-panel text-blue-600 text-3xl mb-3"></i>
-                        <p class="text-sm font-bold text-blue-800 uppercase tracking-wide">Recommended System</p>
+                        <p class="text-sm font-bold text-blue-800 uppercase">System Capacity</p>
                         <p class="text-4xl font-black text-blue-900 mt-1"><span id="calcCapacity">3.2</span> kWp</p>
                     </div>
                     <div class="bg-green-50 p-8 rounded-2xl border border-green-100 text-center">
                         <i class="fas fa-hand-holding-usd text-green-600 text-3xl mb-3"></i>
-                        <p class="text-sm font-bold text-green-800 uppercase tracking-wide">Est. Monthly Savings</p>
+                        <p class="text-sm font-bold text-green-800 uppercase">Est. Monthly Savings</p>
                         <p class="text-4xl font-black text-green-900 mt-1">₱<span id="calcSavings">5,600</span></p>
                     </div>
                 </div>
 
-                <div class="bg-slate-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-                    <div class="relative z-10">
-                        <p class="text-sm font-bold text-yellow-400 uppercase tracking-widest mb-6 border-b border-slate-700 pb-4">Estimated Project Summary</p>
-                        
-                        <div class="space-y-4 mb-8 text-lg">
-                            <div class="flex justify-between border-b border-slate-800 pb-2">
-                                <span class="text-slate-400">Installation & Labor</span>
-                                <span class="font-bold text-slate-100">₱<span id="calcInstall">45,000</span></span>
-                            </div>
-                            <div class="flex justify-between border-b border-slate-800 pb-2">
-                                <span class="text-slate-400">Net Metering Application</span>
-                                <span class="font-bold text-slate-100">₱<span id="calcNetMetering">25,000</span></span>
-                            </div>
-                            <div class="flex justify-between text-2xl pt-4 text-yellow-400">
-                                <span class="font-bold uppercase tracking-tight">Total Package Price</span>
-                                <span class="font-black">₱<span id="calcTotal">265,000</span></span>
-                            </div>
+                <div class="bg-slate-900 rounded-3xl p-8 md:p-12 text-white">
+                    <p class="text-sm font-bold text-yellow-400 uppercase tracking-widest mb-6 border-b border-slate-700 pb-4 text-center">Project Investment Summary</p>
+                    <div class="space-y-4 mb-8 text-lg max-w-2xl mx-auto">
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Installation & Labor</span>
+                            <span class="font-bold">₱<span id="calcInstall">45,000</span></span>
                         </div>
-
-                        <div class="bg-slate-800 p-5 rounded-xl border-l-4 border-yellow-500">
-                            <p class="text-xs text-slate-300 leading-relaxed">
-                                <strong class="text-yellow-500 uppercase">Disclaimer:</strong> Values shown above are estimated based on average market rates. Final pricing and system capacity will be finalized after a technical site inspection of your roof and electrical setup.
-                            </p>
+                        <div class="flex justify-between border-b border-slate-800 pb-2">
+                            <span class="text-slate-400">Net Metering Application</span>
+                            <span class="font-bold">₱<span id="calcNetMetering">25,000</span></span>
                         </div>
+                        <div class="flex justify-between text-2xl pt-4 text-yellow-400">
+                            <span class="font-bold uppercase">Total Package Price</span>
+                            <span class="font-black">₱<span id="calcTotal">265,000</span></span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-yellow-500 max-w-2xl mx-auto">
+                        <p class="text-xs text-slate-300 italic">
+                            <strong>Note:</strong> Pricing and system capacity are estimated. Final values will be confirmed after a technical site inspection.
+                        </p>
                     </div>
                 </div>
 
                 <div class="mt-16 max-w-lg mx-auto border-t pt-12">
-                    <h3 class="text-2xl font-bold text-center mb-8 text-slate-800">Request a Final Site Inspection</h3>
-                    
-                    <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-5">
+                    <h3 class="text-2xl font-bold text-center mb-8">Request Final Site Inspection</h3>
+                    <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-4">
                         <input type="hidden" name="_next" value="https://jp-solarph.github.io/thanks.html">
-                        <input type="hidden" name="_subject" value="New Site Inspection Request">
+                        <input type="hidden" name="_subject" value="New Inspection Request">
                         <input type="hidden" name="_captcha" value="false">
 
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1">Full Name</label>
-                            <input type="text" name="Name" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50 transition-all">
+                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="tel" name="Phone" placeholder="Mobile #" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
+                            <input type="email" name="Email" placeholder="Email" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-1">Mobile Number</label>
-                                <input type="tel" name="Phone" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50 transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-1">Email Address</label>
-                                <input type="email" name="Email" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50 transition-all">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1">Complete Installation Address</label>
-                            <textarea name="Address" rows="3" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50 transition-all" placeholder="House No., Street, Brgy, City"></textarea>
-                        </div>
+                        <textarea name="Address" rows="3" placeholder="Complete Address (Street, Brgy, City)" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50"></textarea>
 
                         <input type="hidden" name="System_Capacity" id="hiddenCapacity">
                         <input type="hidden" name="Estimated_Total" id="hiddenTotal">
 
-                        <button type="submit" onclick="updateHiddenFields()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-xl transition shadow-xl uppercase tracking-wider mt-4 transform active:scale-95">
-                            Submit Inspection Request
+                        <button type="submit" onclick="updateHiddenFields()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-xl transition shadow-xl uppercase tracking-wider">
+                            Submit Request
                         </button>
                     </form>
                 </div>
@@ -107,7 +90,6 @@
 
     <script>
         const billInput = document.getElementById('billInput');
-        
         function calculateSolar() {
             const bill = parseFloat(billInput.value) || 0;
             const capacity = (bill / 2500).toFixed(1);
@@ -122,12 +104,10 @@
             document.getElementById('calcInstall').innerText = Math.round(installCost).toLocaleString();
             document.getElementById('calcTotal').innerText = Math.round(packagePrice).toLocaleString();
         }
-
         function updateHiddenFields() {
             document.getElementById('hiddenCapacity').value = document.getElementById('calcCapacity').innerText + " kWp";
             document.getElementById('hiddenTotal').value = "₱" + document.getElementById('calcTotal').innerText;
         }
-
         billInput.addEventListener('input', calculateSolar);
         window.onload = calculateSolar;
     </script>
