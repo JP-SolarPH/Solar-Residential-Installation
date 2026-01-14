@@ -23,7 +23,7 @@
         <div class="absolute inset-0 bg-blue-900/80"></div>
         <div class="relative z-10 max-w-4xl mx-auto text-balance">
             <h1 class="text-3xl md:text-5xl font-black mb-2 uppercase italic tracking-tighter leading-none">Solar Intelligence Dashboard</h1>
-            <p class="text-blue-200 uppercase tracking-widest text-sm font-bold">Comprehensive Energy Flow & ROI Analytics</p>
+            <p class="text-blue-200 uppercase tracking-widest text-sm font-bold">Complete Performance & Savings Suite</p>
         </div>
     </header>
 
@@ -36,15 +36,15 @@
                         <label class="block text-xs font-bold text-blue-600 uppercase mb-2">Monthly Bill (₱)</label>
                         <input type="number" id="billInput" value="8000" class="w-full text-2xl font-black bg-transparent outline-none">
                     </div>
-                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm text-balance">
+                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm">
                         <label class="block text-xs font-bold text-blue-600 uppercase mb-2">System Architecture</label>
                         <select id="systemType" class="w-full bg-transparent font-bold outline-none cursor-pointer">
                             <option value="on-grid">On-Grid (Savings Focus)</option>
                             <option value="hybrid">Hybrid (With Battery)</option>
-                            <option value="off-grid">Off-Grid (Independent)</option>
+                            <option value="off-grid">Off-Grid (Self-Sustaining)</option>
                         </select>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm text-balance">
+                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm">
                         <label class="block text-xs font-bold text-blue-600 uppercase mb-2">Roof Structure</label>
                         <select id="roofType" class="w-full bg-transparent font-bold outline-none cursor-pointer">
                             <option value="metal">Metal Deck</option>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="mb-8 flex justify-center items-center gap-4 bg-slate-100 p-6 rounded-3xl border border-slate-200 shadow-inner">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Select Cycle:</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Simulation Cycle:</p>
                     <button onclick="setFlow('morning')" class="px-5 py-2 rounded-xl border-2 border-blue-500 font-bold text-blue-600 hover:bg-blue-600 hover:text-white transition-all">Morning</button>
                     <button onclick="setFlow('afternoon')" class="px-5 py-2 rounded-xl border-2 border-yellow-500 font-bold text-yellow-600 hover:bg-yellow-500 hover:text-white transition-all shadow-sm">Afternoon</button>
                     <button onclick="setFlow('night')" class="px-5 py-2 rounded-xl border-2 border-slate-700 font-bold text-slate-700 hover:bg-slate-700 hover:text-white transition-all">Night</button>
@@ -68,7 +68,6 @@
                             <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-5 h-2 bg-slate-600 rounded-t"></div>
                             <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-center text-white font-black"><span id="battPercent">50</span>%</div>
                         </div>
-
                         <div class="flex justify-between items-center relative z-10 max-w-3xl mx-auto">
                             <div class="text-center">
                                 <div id="panelIcon" class="w-16 h-16 md:w-28 md:h-28 bg-blue-600 rounded-3xl flex items-center justify-center text-white mb-3 shadow-2xl transition-all duration-700"><i class="fas fa-solar-panel text-3xl md:text-5xl"></i></div>
@@ -77,17 +76,17 @@
                             <div class="flex-grow h-1.5 bg-slate-800 mx-4 relative rounded-full"><div id="flowLine" class="energy-particle"></div></div>
                             <div class="text-center">
                                 <div class="w-20 h-20 md:w-32 md:h-32 bg-green-600 rounded-full flex items-center justify-center text-white mb-3 shadow-2xl border-4 border-slate-800"><i class="fas fa-home text-4xl md:text-6xl"></i></div>
-                                <span class="text-xs text-slate-500 font-black uppercase">Home Load</span>
+                                <span class="text-xs text-slate-500 font-black uppercase tracking-tighter">Your Home</span>
                             </div>
                             <div class="flex-grow h-1.5 bg-slate-800 mx-4 relative rounded-full"><div id="gridLine" class="energy-particle" style="animation-delay: 1s;"></div></div>
                             <div class="text-center">
                                 <div id="storageIcon" class="w-16 h-16 md:w-28 md:h-28 bg-slate-800 rounded-3xl flex items-center justify-center text-white mb-3 shadow-2xl transition-all"><i class="fas fa-tower-broadcast text-3xl md:text-5xl"></i></div>
-                                <span id="storageLabel" class="text-xs text-slate-500 font-black uppercase">Utility Grid</span>
+                                <span id="storageLabel" class="text-xs text-slate-500 font-black uppercase tracking-tighter">Utility Grid</span>
                             </div>
                         </div>
                         <div class="mt-14 text-center relative z-10">
-                            <h4 id="flowStatus" class="text-white font-black text-2xl uppercase italic tracking-tight mb-2">System Simulation</h4>
-                            <p id="flowDesc" class="text-slate-400 text-sm max-w-md mx-auto italic font-medium leading-relaxed">Visualizing custom energy distribution for your home.</p>
+                            <h4 id="flowStatus" class="text-white font-black text-2xl uppercase italic tracking-tight mb-2">Live Simulation</h4>
+                            <p id="flowDesc" class="text-slate-400 text-sm max-w-md mx-auto italic font-medium leading-relaxed">Energy management visualization.</p>
                         </div>
                     </div>
                 </div>
@@ -131,11 +130,10 @@
                     </div>
                     <div class="bg-blue-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 opacity-10 text-9xl"><i class="fas fa-clipboard-check"></i></div>
-                        <h3 class="text-xl font-black uppercase mb-6 tracking-widest text-blue-300 italic border-b border-blue-800 pb-2">Technical Visit Ready?</h3>
+                        <h3 class="text-xl font-black uppercase mb-6 tracking-widest text-blue-300 italic border-b border-blue-800 pb-2">Technical Checklist</h3>
                         <ul class="space-y-4">
-                            <li class="flex items-start gap-4"><div class="mt-1 w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-check"></i></div><div><p class="font-bold text-sm leading-none">Last 12 Month Bills</p><p class="text-[10px] text-blue-300 font-medium italic">For historical load analysis.</p></div></li>
-                            <li class="flex items-start gap-4"><div class="mt-1 w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-check"></i></div><div><p class="font-bold text-sm leading-none">Safe Roof Access</p><p class="text-[10px] text-blue-300 font-medium italic">Clear path for structural measurements.</p></div></li>
-                            <li class="flex items-start gap-4"><div class="mt-1 w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-check"></i></div><div><p class="font-bold text-sm leading-none">Main Panel Access</p><p class="text-[10px] text-blue-300 font-medium italic">Area around breakers must be clear.</p></div></li>
+                            <li class="flex items-start gap-4"><div class="mt-1 w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-check"></i></div><div><p class="font-bold text-sm leading-none">Monthly Load Data</p><p class="text-[10px] text-blue-300 font-medium italic">Latest bills for historical analysis.</p></div></li>
+                            <li class="flex items-start gap-4"><div class="mt-1 w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-check"></i></div><div><p class="font-bold text-sm leading-none">Physical Access</p><p class="text-[10px] text-blue-300 font-medium italic">Path for structural measurements.</p></div></li>
                         </ul>
                     </div>
                 </div>
@@ -148,14 +146,22 @@
                         </div>
                     </div>
                     <div class="p-8">
+                        <div class="bg-blue-600 p-8 rounded-3xl text-white text-center mb-10 shadow-lg relative overflow-hidden">
+                             <p class="text-blue-100 text-xs font-bold uppercase tracking-[0.3em] mb-2">Estimated Project Total</p>
+                             <h3 class="text-5xl font-black leading-none tracking-tight">₱<span id="totalProject">0</span></h3>
+                             <p class="text-[10px] text-blue-200 mt-4 uppercase font-black italic">* Final quote finalized after structural visit.</p>
+                        </div>
+
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                             <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Daily Savings</p><p class="text-2xl font-black text-green-600">₱<span id="saveDaily">0</span></p></div>
                             <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Monthly Savings</p><p class="text-2xl font-black text-green-600">₱<span id="saveMonthly">0</span></p></div>
-                            <div class="bg-blue-900 p-6 rounded-3xl text-center text-white"><p class="text-[10px] font-bold text-blue-300 uppercase mb-2">Total Recovery</p><p class="text-2xl font-black"><span id="roiYearsMain">0</span> <span class="text-sm font-normal">Years</span></p></div>
+                            <div class="bg-blue-900 p-6 rounded-3xl text-center text-white"><p class="text-[10px] font-bold text-blue-300 uppercase mb-2">Total Recovery</p><p class="text-2xl font-black"><span id="roiYearsMain">0</span> <span class="text-sm font-normal uppercase">Years</span></p></div>
                         </div>
+                        
                         <div class="max-w-4xl mx-auto mb-8"><canvas id="roiChart" height="110"></canvas></div>
+                        
                         <div class="bg-yellow-50 p-4 border border-yellow-200 rounded-2xl text-center">
-                            <p class="text-[10px] text-yellow-800 font-bold uppercase tracking-widest italic leading-relaxed text-balance">
+                            <p class="text-[10px] text-yellow-800 font-bold uppercase tracking-widest italic leading-relaxed text-balance text-balance">
                                 ⚠️ Note: Pricing shown is estimated only and will be finalized upon technical site visit.
                             </p>
                         </div>
@@ -166,10 +172,13 @@
                     <h3 class="text-2xl font-black uppercase mb-6 tracking-tighter italic text-center lg:text-left">Book Site Visit</h3>
                     <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-4">
                         <input type="hidden" name="_next" value="https://jp-solarph.github.io/thanks.html">
-                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm">
-                        <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm">
+                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
+                            <input type="email" name="Email" placeholder="Email Address" required class="w-full p-4 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
+                        </div>
                         <textarea name="Address" rows="3" placeholder="Installation Address" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all"></textarea>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center mt-2 italic leading-relaxed text-balance">* Works include 2-year service warranty plus manufacturer coverage for panels, inverter, and battery.</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center mt-2 italic text-balance">* Includes 2Y service warranty and official hardware performance guarantees.</p>
                         <button type="submit" class="w-full bg-blue-600 text-white font-black py-6 rounded-2xl shadow-xl uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all text-lg tracking-tight">Confirm Site Visit</button>
                     </form>
                 </div>
@@ -205,6 +214,7 @@
             document.getElementById('panelCount').innerText = Math.ceil((capacity * 1000) / 590);
             document.getElementById('saveDaily').innerText = Math.round(monthlySave / 30).toLocaleString();
             document.getElementById('saveMonthly').innerText = Math.round(monthlySave).toLocaleString();
+            document.getElementById('totalProject').innerText = Math.round(totalCost).toLocaleString();
             document.getElementById('roiYearsBadge').innerText = roiYears.toFixed(1);
             document.getElementById('roiYearsMain').innerText = roiYears.toFixed(1);
 
@@ -216,16 +226,10 @@
             document.getElementById('circleInv').style.strokeDasharray = `${invScore}, 100`;
 
             const battContainer = document.getElementById('batteryContainer');
-            const storageIcon = document.getElementById('storageIcon');
-            const storageLabel = document.getElementById('storageLabel');
             if (batteryCost > 0) {
                 battContainer.classList.remove('hidden');
-                storageIcon.innerHTML = '<i class="fas fa-car-battery text-3xl md:text-5xl"></i>';
-                storageLabel.innerText = 'Battery Bank';
             } else {
                 battContainer.classList.add('hidden');
-                storageIcon.innerHTML = '<i class="fas fa-tower-broadcast text-3xl md:text-5xl"></i>';
-                storageLabel.innerText = 'Utility Grid';
             }
             updateChart(totalCost, yearlySave);
         }
