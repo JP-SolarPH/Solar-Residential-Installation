@@ -6,81 +6,98 @@
     <title>Solar Project Calculator | jp-solarph</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .hero-bg { background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-900">
+<body class="bg-gray-100 font-sans text-gray-900">
 
-    <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-12 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 uppercase">Solar Project Calculator</h1>
-            <p class="text-blue-100 text-lg">Instant residential solar estimation for Filipino homeowners.</p>
+    <header class="hero-bg relative text-white py-24 px-6 text-center">
+        <div class="absolute inset-0 bg-blue-900/70"></div> <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="bg-yellow-400 text-blue-900 px-4 py-1 rounded-full font-bold text-sm uppercase tracking-widest">Premium Solar Solutions</span>
+            <h1 class="text-4xl md:text-6xl font-black mt-6 mb-4 drop-shadow-lg uppercase italic">Stop Paying for <span class="text-yellow-400">High Bills!</span></h1>
+            <p class="text-xl text-blue-100 font-light">Get an instant estimate for your residential solar installation.</p>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 -mt-10 mb-20">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+    <main class="max-w-6xl mx-auto px-6 -mt-16 mb-20 relative z-20">
+        <div class="glass rounded-3xl shadow-2xl overflow-hidden border border-white/20">
             <div class="p-8 md:p-12">
                 
-                <div class="max-w-md mx-auto mb-12 text-center">
-                    <label class="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Average Monthly Bill (₱)</label>
+                <div class="max-w-md mx-auto mb-16 text-center">
+                    <label class="block text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Enter Average Monthly Bill (₱)</label>
                     <input type="number" id="billInput" value="8000" step="500" 
-                           class="w-full text-center text-4xl font-bold text-blue-700 border-b-4 border-blue-200 focus:border-blue-600 outline-none pb-2 transition-all">
+                           class="w-full text-center text-5xl font-black text-gray-800 border-b-4 border-yellow-400 focus:border-blue-600 outline-none pb-2 bg-transparent transition-all">
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div class="bg-blue-50 p-8 rounded-2xl border border-blue-100 text-center">
-                        <i class="fas fa-solar-panel text-blue-600 text-3xl mb-3"></i>
-                        <p class="text-sm font-bold text-blue-800 uppercase">System Capacity</p>
-                        <p class="text-4xl font-black text-blue-900 mt-1"><span id="calcCapacity">3.2</span> kWp</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <div class="bg-white p-8 rounded-3xl shadow-lg border-b-8 border-blue-500 hover:scale-105 transition-transform">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                <i class="fas fa-bolt text-xl"></i>
+                            </div>
+                            <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Recommended Capacity</p>
+                        </div>
+                        <p class="text-5xl font-black text-gray-800"><span id="calcCapacity">3.2</span> <span class="text-2xl text-gray-400">kWp</span></p>
                     </div>
-                    <div class="bg-green-50 p-8 rounded-2xl border border-green-100 text-center">
-                        <i class="fas fa-hand-holding-usd text-green-600 text-3xl mb-3"></i>
-                        <p class="text-sm font-bold text-green-800 uppercase">Est. Monthly Savings</p>
-                        <p class="text-4xl font-black text-green-900 mt-1">₱<span id="calcSavings">5,600</span></p>
+                    <div class="bg-white p-8 rounded-3xl shadow-lg border-b-8 border-green-500 hover:scale-105 transition-transform">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                                <i class="fas fa-piggy-bank text-xl"></i>
+                            </div>
+                            <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Estimated Savings</p>
+                        </div>
+                        <p class="text-5xl font-black text-gray-800">₱<span id="calcSavings">5,600</span> <span class="text-2xl text-gray-400">/mo</span></p>
                     </div>
                 </div>
 
-                <div class="bg-slate-900 rounded-3xl p-8 md:p-12 text-white">
-                    <p class="text-sm font-bold text-yellow-400 uppercase tracking-widest mb-6 border-b border-slate-700 pb-4 text-center">Project Investment Summary</p>
-                    <div class="space-y-4 mb-8 text-lg max-w-2xl mx-auto">
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
-                            <span class="text-slate-400">Installation & Labor</span>
-                            <span class="font-bold">₱<span id="calcInstall">45,000</span></span>
+                <div class="grid md:grid-cols-5 bg-slate-900 rounded-3xl overflow-hidden shadow-xl mb-16">
+                    <div class="md:col-span-2 bg-[url('https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center min-h-[250px]"></div>
+                    <div class="md:col-span-3 p-8 md:p-12 text-white">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-6 border-b border-slate-700 pb-2 uppercase tracking-widest">Project Summary</h3>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex justify-between border-b border-slate-800 pb-2">
+                                <span class="text-slate-400">Installation & Labor</span>
+                                <span class="font-bold">₱<span id="calcInstall">45,000</span></span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-800 pb-2">
+                                <span class="text-slate-400">Net Metering Application</span>
+                                <span class="font-bold">₱<span id="calcNetMetering">25,000</span></span>
+                            </div>
+                            <div class="flex justify-between text-3xl pt-4 text-yellow-400 font-black">
+                                <span>Total Package</span>
+                                <span>₱<span id="calcTotal">265,000</span></span>
+                            </div>
                         </div>
-                        <div class="flex justify-between border-b border-slate-800 pb-2">
-                            <span class="text-slate-400">Net Metering Application</span>
-                            <span class="font-bold">₱<span id="calcNetMetering">25,000</span></span>
-                        </div>
-                        <div class="flex justify-between text-2xl pt-4 text-yellow-400">
-                            <span class="font-bold uppercase">Total Package Price</span>
-                            <span class="font-black">₱<span id="calcTotal">265,000</span></span>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-yellow-500 max-w-2xl mx-auto">
-                        <p class="text-xs text-slate-300 italic">
-                            <strong>Note:</strong> Pricing and system capacity are estimated. Final values will be confirmed after a technical site inspection.
+                        <p class="text-[10px] text-slate-400 uppercase leading-relaxed tracking-widest">
+                            *This is an estimate. Final pricing determined after site technical inspection.
                         </p>
                     </div>
                 </div>
 
-                <div class="mt-16 max-w-lg mx-auto border-t pt-12">
-                    <h3 class="text-2xl font-bold text-center mb-8">Request Final Site Inspection</h3>
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-black text-gray-800">Book Your Site Inspection</h2>
+                        <p class="text-gray-500">Fill out the form to finalize your system design.</p>
+                    </div>
                     <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-4">
                         <input type="hidden" name="_next" value="https://jp-solarph.github.io/thanks.html">
                         <input type="hidden" name="_subject" value="New Inspection Request">
                         <input type="hidden" name="_captcha" value="false">
 
-                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="tel" name="Phone" placeholder="Mobile #" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
-                            <input type="email" name="Email" placeholder="Email" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50">
+                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
+                            <input type="email" name="Email" placeholder="Email Address" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
                         </div>
-                        <textarea name="Address" rows="3" placeholder="Complete Address (Street, Brgy, City)" required class="w-full p-4 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-slate-50"></textarea>
+                        <textarea name="Address" rows="3" placeholder="Complete Installation Address" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all"></textarea>
 
                         <input type="hidden" name="System_Capacity" id="hiddenCapacity">
                         <input type="hidden" name="Estimated_Total" id="hiddenTotal">
 
-                        <button type="submit" onclick="updateHiddenFields()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-xl transition shadow-xl uppercase tracking-wider">
-                            Submit Request
+                        <button type="submit" onclick="updateHiddenFields()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-5 rounded-2xl transition shadow-xl uppercase tracking-widest mt-4 active:scale-95">
+                            Get My Final Quote
                         </button>
                     </form>
                 </div>
@@ -88,13 +105,17 @@
         </div>
     </main>
 
+    <footer class="text-center py-10 text-gray-400 text-xs tracking-[0.2em] uppercase">
+        &copy; 2026 JP-Solar Philippines. All Rights Reserved.
+    </footer>
+
     <script>
         const billInput = document.getElementById('billInput');
         function calculateSolar() {
             const bill = parseFloat(billInput.value) || 0;
             const capacity = (bill / 2500).toFixed(1);
             const savings = bill * 0.7;
-            const netMetering = 30000;
+            const netMetering = 25000;
             const installCost = (bill / 2500) * 12000;
             const packagePrice = (capacity * 75000) + netMetering;
 
@@ -113,4 +134,3 @@
     </script>
 </body>
 </html>
-
