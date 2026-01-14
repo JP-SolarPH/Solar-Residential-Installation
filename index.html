@@ -3,135 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Project Calculator | jp-solarph</title>
+    <title>Solar Intelligence Dashboard | jp-solarph</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); }
         .hero-bg { background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center; }
+        .circle-bg { fill: none; stroke: #f1f5f9; stroke-width: 3; }
+        .circle-active { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dasharray 1s ease-in-out; }
+        @keyframes flow { 0% { left: 0%; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+        .energy-particle { position: absolute; width: 10px; height: 10px; background: #facc15; border-radius: 50%; box-shadow: 0 0 12px #facc15; animation: flow 2s linear infinite; }
+        .battery-segment { transition: height 1s ease-in-out, background-color 0.5s; }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-900">
+<body class="bg-slate-50 font-sans text-slate-900 leading-tight">
 
-    <header class="hero-bg relative text-white py-24 px-6 text-center">
-        <div class="absolute inset-0 bg-blue-900/70"></div> <div class="relative z-10 max-w-4xl mx-auto">
-            <span class="bg-yellow-400 text-blue-900 px-4 py-1 rounded-full font-bold text-sm uppercase tracking-widest">Premium Solar Solutions</span>
-            <h1 class="text-4xl md:text-6xl font-black mt-6 mb-4 drop-shadow-lg uppercase italic">Stop Paying for <span class="text-yellow-400">High Bills!</span></h1>
-            <p class="text-xl text-blue-100 font-light">Get an instant estimate for your residential solar installation.</p>
+    <header class="hero-bg relative text-white py-14 px-6 text-center">
+        <div class="absolute inset-0 bg-slate-900/80"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-3xl md:text-5xl font-black mb-2 uppercase italic tracking-tighter text-balance">Solar Intelligence Dashboard</h1>
+            <p class="text-slate-300 uppercase tracking-widest text-xs font-bold">Expert Energy Flow & Behavioral Efficiency</p>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 -mt-16 mb-20 relative z-20">
-        <div class="glass rounded-3xl shadow-2xl overflow-hidden border border-white/20">
-            <div class="p-8 md:p-12">
+    <main class="max-w-6xl mx-auto px-6 -mt-8 mb-20 relative z-20">
+        <div class="glass rounded-3xl shadow-2xl overflow-hidden border border-white">
+            <div class="p-6 md:p-10">
                 
-                <div class="max-w-md mx-auto mb-16 text-center">
-                    <label class="block text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-4">Enter Average Monthly Bill (₱)</label>
-                    <input type="number" id="billInput" value="8000" step="500" 
-                           class="w-full text-center text-5xl font-black text-gray-800 border-b-4 border-yellow-400 focus:border-blue-600 outline-none pb-2 bg-transparent transition-all">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border-b-8 border-blue-500 hover:scale-105 transition-transform">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                                <i class="fas fa-bolt text-xl"></i>
-                            </div>
-                            <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Recommended Capacity</p>
-                        </div>
-                        <p class="text-5xl font-black text-gray-800"><span id="calcCapacity">3.2</span> <span class="text-2xl text-gray-400">kWp</span></p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm">
+                        <label class="block text-xs font-bold text-blue-600 uppercase mb-2">Monthly Bill (₱)</label>
+                        <input type="number" id="billInput" value="8000" class="w-full text-2xl font-black bg-transparent outline-none">
                     </div>
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border-b-8 border-green-500 hover:scale-105 transition-transform">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                                <i class="fas fa-piggy-bank text-xl"></i>
-                            </div>
-                            <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Estimated Savings</p>
-                        </div>
-                        <p class="text-5xl font-black text-gray-800">₱<span id="calcSavings">5,600</span> <span class="text-2xl text-gray-400">/mo</span></p>
+                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm">
+                        <label class="block text-xs font-bold text-blue-600 uppercase mb-2">System Type</label>
+                        <select id="systemType" class="w-full bg-transparent font-bold outline-none cursor-pointer">
+                            <option value="on-grid">On-Grid (No Battery)</option>
+                            <option value="hybrid">Hybrid (With Battery)</option>
+                            <option value="off-grid">Off-Grid (Independent)</option>
+                        </select>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border-2 border-slate-100 shadow-sm">
+                        <label class="block text-xs font-bold text-blue-600 uppercase mb-2">Roof Structure</label>
+                        <select id="roofType" class="w-full bg-transparent font-bold outline-none cursor-pointer">
+                            <option value="metal">Metal Deck</option>
+                            <option value="shingles">Asphalt Shingles</option>
+                            <option value="flat">Concrete Slab</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-5 bg-slate-900 rounded-3xl overflow-hidden shadow-xl mb-16">
-                    <div class="md:col-span-2 bg-[url('https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center min-h-[250px]"></div>
-                    <div class="md:col-span-3 p-8 md:p-12 text-white">
-                        <h3 class="text-xl font-bold text-yellow-400 mb-6 border-b border-slate-700 pb-2 uppercase tracking-widest">Project Summary</h3>
-                        <div class="space-y-4 mb-8">
-                            <div class="flex justify-between border-b border-slate-800 pb-2">
-                                <span class="text-slate-400">Installation & Labor</span>
-                                <span class="font-bold">₱<span id="calcInstall">45,000</span></span>
+                <div class="mb-12">
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <button onclick="setFlow('morning')" class="px-8 py-3 rounded-xl border-2 border-blue-500 font-bold text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-md">MORNING</button>
+                        <button onclick="setFlow('afternoon')" class="px-8 py-3 rounded-xl border-2 border-yellow-500 font-bold text-yellow-600 hover:bg-yellow-500 hover:text-white transition-all shadow-md">AFTERNOON</button>
+                        <button onclick="setFlow('night')" class="px-8 py-3 rounded-xl border-2 border-slate-700 font-bold text-slate-700 hover:bg-slate-700 hover:text-white transition-all shadow-md">NIGHT</button>
+                    </div>
+
+                    <div class="relative bg-slate-900 rounded-[3rem] p-8 md:p-16 overflow-hidden border-8 border-slate-800">
+                        <div id="batteryContainer" class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-32 border-4 border-slate-600 rounded-lg p-1 hidden flex-col justify-end">
+                            <div id="batteryLevel" class="battery-segment w-full bg-green-500 rounded-sm" style="height: 50%;"></div>
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-2 bg-slate-600 rounded-t"></div>
+                        </div>
+
+                        <div class="flex justify-between items-center relative z-10 max-w-3xl mx-auto">
+                            <div class="text-center">
+                                <div id="panelIcon" class="w-16 h-16 md:w-28 md:h-28 bg-blue-600 rounded-3xl flex items-center justify-center text-white mb-3 shadow-2xl transition-all duration-700">
+                                    <i class="fas fa-solar-panel text-3xl md:text-5xl"></i>
+                                </div>
+                                <span class="text-xs text-slate-500 font-black uppercase">PV Array</span>
                             </div>
-                            <div class="flex justify-between border-b border-slate-800 pb-2">
-                                <span class="text-slate-400">Net Metering Application</span>
-                                <span class="font-bold">₱<span id="calcNetMetering">25,000</span></span>
+                            <div class="flex-grow h-1.5 bg-slate-800 mx-4 relative rounded-full"><div id="flowLine" class="energy-particle"></div></div>
+                            <div class="text-center">
+                                <div class="w-20 h-20 md:w-32 md:h-32 bg-green-600 rounded-full flex items-center justify-center text-white mb-3 shadow-2xl border-4 border-slate-800"><i class="fas fa-home text-4xl md:text-6xl"></i></div>
+                                <span class="text-xs text-slate-500 font-black uppercase">Home Load</span>
                             </div>
-                            <div class="flex justify-between text-3xl pt-4 text-yellow-400 font-black">
-                                <span>Total Package</span>
-                                <span>₱<span id="calcTotal">265,000</span></span>
+                            <div class="flex-grow h-1.5 bg-slate-800 mx-4 relative rounded-full"><div id="gridLine" class="energy-particle" style="animation-delay: 1s;"></div></div>
+                            <div class="text-center">
+                                <div id="storageIcon" class="w-16 h-16 md:w-28 md:h-28 bg-slate-800 rounded-3xl flex items-center justify-center text-white mb-3 shadow-2xl transition-all"><i class="fas fa-tower-broadcast text-3xl md:text-5xl"></i></div>
+                                <span id="storageLabel" class="text-xs text-slate-500 font-black uppercase">Utility Grid</span>
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-400 uppercase leading-relaxed tracking-widest">
-                            *This is an estimate. Final pricing determined after site technical inspection.
-                        </p>
+                        
+                        <div class="mt-12 text-center">
+                            <div class="inline-flex items-center gap-2 bg-yellow-400 text-blue-900 px-3 py-1 rounded-full text-[10px] font-black uppercase mb-4 shadow-sm">
+                                <i class="fas fa-lightbulb"></i> Expert Energy Tip
+                            </div>
+                            <h4 id="flowStatus" class="text-white font-black text-2xl uppercase italic tracking-tight mb-2">System Ready</h4>
+                            <p id="flowDesc" class="text-slate-400 text-sm max-w-md mx-auto leading-relaxed italic font-medium">Select a time cycle above to begin energy simulation.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="max-w-2xl mx-auto">
-                    <div class="text-center mb-10">
-                        <h2 class="text-3xl font-black text-gray-800">Book Your Site Inspection</h2>
-                        <p class="text-gray-500">Fill out the form to finalize your system design.</p>
+                <div class="mb-12 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+                    <div class="bg-slate-50 px-8 py-4 border-b flex justify-between items-center">
+                        <h2 class="font-black text-slate-800 uppercase tracking-tight text-lg">Daily Energy Simulation</h2>
+                        <i class="fas fa-chart-line text-slate-400"></i>
                     </div>
-                    <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-4">
+                    <div class="p-8 max-w-3xl mx-auto">
+                        <div class="text-center mb-10">
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Energy Breakdown</p>
+                            <div class="flex h-5 w-full bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                                <div id="barSolar" class="bg-yellow-400 h-full transition-all duration-1000" style="width: 57%;"></div>
+                                <div id="barGrid" class="bg-slate-400 h-full transition-all duration-1000" style="width: 43%;"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Usage</p><p class="text-3xl font-black text-slate-800"><span id="dashUsage">0.00</span> <span class="text-sm font-normal text-slate-400">kWh</span></p></div>
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Production</p><p class="text-3xl font-black text-slate-800"><span id="dashProd">0.00</span> <span class="text-sm font-normal text-slate-400">kWh</span></p></div>
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2 text-yellow-600">Import</p><p class="text-3xl font-black text-slate-800"><span id="dashImport">0.00</span> <span class="text-sm font-normal text-slate-400">kWh</span></p></div>
+                        </div>
+                        <div class="flex justify-around items-start pt-8 border-t">
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-32 h-32"><svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /><path id="circleSolar" class="circle-active stroke-yellow-400" stroke-dasharray="57, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="text-xl font-black text-slate-800">57%</span><span class="text-[9px] font-black text-emerald-500 uppercase">Good</span></div></div>
+                                <p class="mt-2 text-[10px] font-bold text-slate-500 uppercase">Solar Score</p>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="relative w-32 h-32"><svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /><path id="circleInv" class="circle-active stroke-yellow-400" stroke-dasharray="69, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="text-xl font-black text-slate-800">69%</span><span class="text-[9px] font-black text-emerald-500 uppercase">Good</span></div></div>
+                                <p class="mt-2 text-[10px] font-bold text-slate-500 uppercase">Inverter Score</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-xl relative overflow-hidden text-balance">
+                        <div class="absolute top-0 right-0 bg-yellow-400 text-slate-900 px-6 py-2 rounded-bl-3xl font-black text-sm uppercase">Payback: <span id="roiYearsBadge">0</span> Yrs</div>
+                        <h3 class="text-xl font-black text-slate-800 uppercase mb-6"><i class="fas fa-history text-blue-600"></i> ROI Projection</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between font-bold text-slate-400 text-xs uppercase"><span>System Base</span><span class="text-slate-900 text-lg">₱<span id="baseCost">0</span></span></div>
+                            <div id="batteryCostRow" class="flex justify-between font-bold text-slate-400 text-xs uppercase hidden"><span>Battery Unit</span><span class="text-blue-600 text-lg">₱<span id="batteryCostText">0</span></span></div>
+                            <div class="flex justify-between font-bold text-slate-900 pt-4 border-t uppercase text-lg"><span>Total Package</span><span class="font-black text-blue-900">₱<span id="totalProject">0</span></span></div>
+                            <div class="text-center pt-8 border-t border-dashed border-slate-100">
+                                <p class="text-slate-400 text-[10px] font-bold uppercase mb-1">Estimated Investment Recovery</p>
+                                <p class="text-5xl font-black text-blue-600"><span id="roiYearsMain">0</span> <span class="text-xl font-normal text-slate-300 uppercase">Years</span></p>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-yellow-50 rounded-xl border border-yellow-100 text-[10px] text-yellow-800 font-bold uppercase text-center leading-tight">⚠️ Pricing is estimated. Final values confirmed upon site inspection.</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-lg flex flex-col items-center">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Savings Projection (25Y)</p>
+                        <canvas id="roiChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="inspectionForm" class="max-w-2xl mx-auto pt-16 border-t-2 border-dashed border-slate-200 text-center">
+                    <h2 class="text-3xl font-black uppercase italic tracking-tighter text-slate-800 leading-none">Book Your Site Visit</h2>
+                    <p class="text-slate-500 font-medium mt-2 mb-10">Lock in your finalized engineering design and proposal.</p>
+                    <form action="https://formsubmit.co/jpajorvina@gmail.com" method="POST" class="space-y-4 px-4 text-left">
                         <input type="hidden" name="_next" value="https://jp-solarph.github.io/thanks.html">
-                        <input type="hidden" name="_subject" value="New Inspection Request">
-                        <input type="hidden" name="_captcha" value="false">
-
-                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
+                        <input type="text" name="Name" placeholder="Full Name" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
-                            <input type="email" name="Email" placeholder="Email Address" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all">
+                            <input type="tel" name="Phone" placeholder="Mobile Number" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
+                            <input type="email" name="Email" placeholder="Email" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all">
                         </div>
-                        <textarea name="Address" rows="3" placeholder="Complete Installation Address" required class="w-full p-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-blue-600 bg-gray-50 transition-all"></textarea>
-
-                        <input type="hidden" name="System_Capacity" id="hiddenCapacity">
-                        <input type="hidden" name="Estimated_Total" id="hiddenTotal">
-
-                        <button type="submit" onclick="updateHiddenFields()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-5 rounded-2xl transition shadow-xl uppercase tracking-widest mt-4 active:scale-95">
-                            Get My Final Quote
-                        </button>
+                        <textarea name="Address" rows="3" placeholder="Installation Address" required class="w-full p-5 bg-slate-50 border-2 rounded-2xl outline-none focus:border-blue-600 font-bold shadow-sm transition-all"></textarea>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-black py-6 rounded-2xl shadow-xl uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition-all">Request Inspection & Quote</button>
                     </form>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="text-center py-10 text-gray-400 text-xs tracking-[0.2em] uppercase">
-        &copy; 2026 JP-Solar Philippines. All Rights Reserved.
+    <footer class="text-center py-12 text-slate-400 text-[10px] tracking-[0.3em] uppercase">
+        &copy; 2026 JP-Solar Philippines. Professional Solar Engineering.
     </footer>
 
     <script>
+        let myChart;
         const billInput = document.getElementById('billInput');
-        function calculateSolar() {
-            const bill = parseFloat(billInput.value) || 0;
-            const capacity = (bill / 2500).toFixed(1);
-            const savings = bill * 0.7;
-            const netMetering = 30000;
-            const installCost = (bill / 2500) * 12000;
-            const packagePrice = (capacity * 75000) + netMetering;
+        const systemType = document.getElementById('systemType');
+        const roofType = document.getElementById('roofType');
 
-            document.getElementById('calcCapacity').innerText = capacity;
-            document.getElementById('calcSavings').innerText = Math.round(savings).toLocaleString();
-            document.getElementById('calcNetMetering').innerText = netMetering.toLocaleString();
-            document.getElementById('calcInstall').innerText = Math.round(installCost).toLocaleString();
-            document.getElementById('calcTotal').innerText = Math.round(packagePrice).toLocaleString();
+        function calculate() {
+            const bill = parseFloat(billInput.value) || 0;
+            const sys = systemType.value;
+            const roof = roofType.value;
+
+            let monthlySave = bill * 0.78;
+            let yearlySave = monthlySave * 12;
+            let capacity = (bill / 2400).toFixed(1);
+            let costPerKw = 78000;
+            if (roof === 'shingles') costPerKw += 6000;
+            if (roof === 'flat') costPerKw += 9000;
+
+            let baseCost = (capacity * costPerKw) + 28000;
+            let batteryCost = (sys !== 'on-grid') ? (Math.ceil(capacity / 3) * 110000) : 0;
+            let totalCost = baseCost + batteryCost;
+            let roiYears = totalCost / yearlySave;
+
+            const usage = (bill / 30 / 12);
+            document.getElementById('dashUsage').innerText = usage.toFixed(2);
+            document.getElementById('dashProd').innerText = (usage * 0.57).toFixed(2);
+            document.getElementById('dashImport').innerText = (usage * 0.43).toFixed(2);
+            
+            document.getElementById('baseCost').innerText = Math.round(baseCost).toLocaleString();
+            document.getElementById('batteryCostText').innerText = Math.round(batteryCost).toLocaleString();
+            document.getElementById('totalProject').innerText = Math.round(totalCost).toLocaleString();
+            document.getElementById('roiYearsBadge').innerText = roiYears.toFixed(1);
+            document.getElementById('roiYearsMain').innerText = roiYears.toFixed(1);
+            
+            const battContainer = document.getElementById('batteryContainer');
+            const storageIcon = document.getElementById('storageIcon');
+            const storageLabel = document.getElementById('storageLabel');
+            if (batteryCost > 0) {
+                document.getElementById('batteryCostRow').classList.remove('hidden');
+                battContainer.classList.remove('hidden');
+                storageIcon.innerHTML = '<i class="fas fa-car-battery text-3xl md:text-5xl"></i>';
+                storageLabel.innerText = 'Battery Bank';
+            } else {
+                document.getElementById('batteryCostRow').classList.add('hidden');
+                battContainer.classList.add('hidden');
+                storageIcon.innerHTML = '<i class="fas fa-tower-broadcast text-3xl md:text-5xl"></i>';
+                storageLabel.innerText = 'Utility Grid';
+            }
+            updateChart(totalCost, yearlySave);
         }
-        function updateHiddenFields() {
-            document.getElementById('hiddenCapacity').value = document.getElementById('calcCapacity').innerText + " kWp";
-            document.getElementById('hiddenTotal').value = "₱" + document.getElementById('calcTotal').innerText;
+
+        function setFlow(time) {
+            const status = document.getElementById('flowStatus');
+            const desc = document.getElementById('flowDesc');
+            const panel = document.getElementById('panelIcon');
+            const f1 = document.getElementById('flowLine');
+            const f2 = document.getElementById('gridLine');
+            const batt = document.getElementById('batteryLevel');
+
+            if (time === 'morning') {
+                status.innerText = 'Morning: Charging Batteries';
+                desc.innerText = 'Run high-load appliances like washing machines now while the system begins its peak production cycle.';
+                panel.style.backgroundColor = '#3b82f6';
+                f1.style.animationDuration = '2.5s'; f1.style.animationDirection = 'normal'; f2.style.animationDirection = 'normal';
+                batt.style.height = '40%'; batt.style.backgroundColor = '#fbbf24';
+            } else if (time === 'afternoon') {
+                status.innerText = 'Afternoon: Maximum Harvest';
+                desc.innerText = 'Peak production reached! Your home is 100% solar powered. Any excess is exported to the grid for credits.';
+                panel.style.backgroundColor = '#fbbf24';
+                f1.style.animationDuration = '0.8s'; f1.style.animationDirection = 'normal'; f2.style.animationDirection = 'normal';
+                batt.style.height = '100%'; batt.style.backgroundColor = '#22c55e';
+            } else {
+                status.innerText = 'Night: Intelligent Discharge';
+                desc.innerText = 'Solar is off. Your home is now using grid energy or drawing from stored battery power to maintain comfort.';
+                panel.style.backgroundColor = '#1e293b';
+                f1.style.animationDuration = '0s'; f2.style.animationDirection = 'reverse';
+                batt.style.height = '15%'; batt.style.backgroundColor = '#ef4444';
+            }
         }
-        billInput.addEventListener('input', calculateSolar);
-        window.onload = calculateSolar;
+
+        function updateChart(cost, yearlySave) {
+            const ctx = document.getElementById('roiChart').getContext('2d');
+            const data = [0, 5, 10, 15, 20, 25].map(year => (yearlySave * year) - cost);
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Yr 0', 'Yr 5', 'Yr 10', 'Yr 15', 'Yr 20', 'Yr 25'],
+                    datasets: [{ label: 'Profit/Loss (₱)', data: data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.4 }]
+                }
+            });
+        }
+
+        [billInput, systemType, roofType].forEach(el => el.addEventListener('input', calculate));
+        window.onload = () => { calculate(); setFlow('afternoon'); };
     </script>
 </body>
 </html>
-
